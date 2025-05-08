@@ -4,16 +4,15 @@ public class TicTacToe {
     public static void main(String[] args) {
         char[][] board = new char[3][3];
         int row = 0,col = 0,count = 0;
+
         Scanner scanner = new Scanner(System.in);
-        for (row = 0; row < 3; row++) {
-            for (col = 0; col < 3; col++) {
-                board[row][col] = ' ';
-            }
-        }
+
+        emptyGrid(board);
+
         char player = 'X';
         boolean isEnd = false;
 
-        while (!isEnd && count < 6){
+        while (!isEnd && count < 9){
             printBoard(board);
             System.out.print("Player " + player + " enter : ");
              row = scanner.nextInt();
@@ -21,13 +20,15 @@ public class TicTacToe {
 
             if((row >= 0 && row < 3) && (col >= 0 && col < 3) && board[row][col] == ' '){
                 count++;
-                if (count == 6) System.out.println("This Game Ends On Draw");
                 board[row][col] = player;
                 isEnd = isGameOver(board,player);
                 if(isEnd){
+                    System.out.println();
                     System.out.println("Player "+player + " Won the Match");
                 }else{
                     player = (player == 'X') ? 'O' : 'X';
+                    System.out.println();
+                    if (count == 9) System.out.println("This Game Ends On Draw");
                 }
             }else{
                 System.out.println("!Invalid Move : Try Again");
@@ -51,8 +52,7 @@ public class TicTacToe {
 
         //check for diagonal
         if(board[0][0] == player && board[1][1] == player && board[2][2] == player) return true;
-        else if (board[0][2] == player && board[1][1] == player && board[2][0] == player) return true;
-        return false;
+        else return board[0][2] == player && board[1][1] == player && board[2][0] == player;
     }
 
     private static void printBoard(char[][] board) {
@@ -64,5 +64,13 @@ public class TicTacToe {
             System.out.println();
         }
         System.out.println();
+    }
+
+    private static void emptyGrid(char[][] board){
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                board[row][col] = ' ';
+            }
+        }
     }
 }
