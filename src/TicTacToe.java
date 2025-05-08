@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class TicTacToe {
     public static void main(String[] args) {
         char[][] board = new char[3][3];
-        int row = 0,col = 0;
+        int row = 0,col = 0,count = 0;
         Scanner scanner = new Scanner(System.in);
         for (row = 0; row < 3; row++) {
             for (col = 0; col < 3; col++) {
@@ -13,13 +13,15 @@ public class TicTacToe {
         char player = 'X';
         boolean isEnd = false;
 
-        while (!isEnd){
+        while (!isEnd && count < 6){
             printBoard(board);
             System.out.print("Player " + player + " enter : ");
              row = scanner.nextInt();
              col = scanner.nextInt();
 
             if((row >= 0 && row < 3) && (col >= 0 && col < 3) && board[row][col] == ' '){
+                count++;
+                if (count == 6) System.out.println("This Game Ends On Draw");
                 board[row][col] = player;
                 isEnd = isGameOver(board,player);
                 if(isEnd){
