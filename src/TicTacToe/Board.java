@@ -43,6 +43,7 @@ public class Board {
             }
             System.out.print("|");
             System.out.println();
+            if(row != 2)System.out.println("_ _ _ _ _ _ _");
         }
         System.out.println();
     }
