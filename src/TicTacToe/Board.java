@@ -1,7 +1,7 @@
 package TicTacToe;
 
 public class Board {
-    private final char[][] board;
+      char[][] board;
 
     public Board(){
         board = new char[3][3];
@@ -9,21 +9,21 @@ public class Board {
     }
 
     private void emptyGrid(){
+        char temp = 49;
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
-                board[row][col] = ' ';
+                board[row][col] = temp++;
             }
         }
     }
 
-    public boolean validPlaceToMove(int row, int col, char currentPlayer){
-        if(row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == ' '){
-            board[row][col] = currentPlayer;
-            return true;
-        }
-        else {
-            return false;
-        }
+    public  boolean validPlaceToMove(int[] arr,char[][] board){
+        int x = arr[0];
+        int y = arr[1];
+
+        if(x == -1) return false;
+        else if (board[x][y] == '❌') return false;
+        else return board[x][y] != '⬤';
     }
 
     public boolean isWin(char player) {
@@ -39,11 +39,12 @@ public class Board {
     public void printBoard() {
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
-                System.out.print("| "+ board[row][col] + " " );
+                if(board[row][col] == '❌' || board[row][col] == '⬤') System.out.print("| "+ board[row][col]);
+                else System.out.print("| "+ board[row][col] + " " );
             }
             System.out.print("|");
             System.out.println();
-            if(row != 2)System.out.println("_ _ _ _ _ _ _");
+            System.out.println("_ _ _ _ _ _ _");
         }
         System.out.println();
     }
@@ -51,7 +52,9 @@ public class Board {
     public boolean isFull() {
         for (char[] row : board)
             for (char cell : row)
-                if (cell == ' ')
+                if (       cell == '1' || cell == '2' || cell == '3'
+                        || cell == '4' || cell == '5' || cell == '6'
+                        || cell == '7' || cell == '8' || cell == '9')
                     return false;
         return true;
     }
