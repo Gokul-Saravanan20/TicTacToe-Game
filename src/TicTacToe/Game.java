@@ -19,16 +19,18 @@ public class Game {
             System.out.print("Enter the place Value : ");
             int place = scanner.nextInt();
             int[] arr = choosePlace(place);
-            boolean placeStatus = board.validPlaceToMove(arr,board.board);
+            boolean placeStatus = validPlaceToMove(arr,board.board);
             if(placeStatus){
                 board.board[arr[0]][arr[1]] = currentPlayer;
-                isGameEnded = board.isWin(currentPlayer);
+                isGameEnded = isWin(currentPlayer);
                 if(isGameEnded){
                     board.printBoard();
                     System.out.println("Player " + currentPlayer + " has WON the Match");
+                    return;
                 }
                 else currentPlayer = switchPlayer(currentPlayer);
-                if (board.isFull()) {
+                if (isFull()) {
+                    board.printBoard();
                     System.out.println("This Game Ends On Draw");
                     isGameEnded = true;
                 }
@@ -59,6 +61,32 @@ public class Game {
         };
     }
 
+    public boolean isFull() {
+        for (char[] row : board.board)
+            for (char cell : row)
+                if (       cell == '1' || cell == '2' || cell == '3'
+                        || cell == '4' || cell == '5' || cell == '6'
+                        || cell == '7' || cell == '8' || cell == '9')
+                    return false;
+        return true;
+    }
+    public  boolean validPlaceToMove(int[] arr,char[][] board){
+        int x = arr[0];
+        int y = arr[1];
 
+        if(x == -1) return false;
+        else if (board[x][y] == '❌') return false;
+        else return board[x][y] != '⬤';
+    }
+
+    public boolean isWin(char player) {
+        for (int check = 0; check < 3; check++)
+            if ((board.board[check][0] == player && board.board[check][1] == player && board.board[check][2] == player) ||
+                    (board.board[0][check] == player && board.board[1][check] == player && board.board[2][check] == player))
+                return true;
+
+        return (board.board[0][0] == player && board.board[1][1] == player && board.board[2][2] == player) ||
+                (board.board[0][2] == player && board.board[1][1] == player && board.board[2][0] == player);
+    }
 
 }
